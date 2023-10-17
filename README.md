@@ -1,9 +1,9 @@
 
 A port of https://github.com/SebLague/Neural-Network-Experiments without the reliance on
-Unity. Just the raw neural network code to cross-reference values with your own
-implementation if you followed along with the [YouTube video on How to Create a Neural
-Network (and Train it to Identify
-Doodles)](https://www.youtube.com/watch?v=hfMk-kjRv4c).
+Unity. Just the raw neural network code so I can cross-reference values with my own
+implementation which doesn't behave as expected. My own implementation is based from
+the [YouTube video from Sebastian Lague on *How to Create a Neural Network (and Train it
+to Identify Doodles)*](https://www.youtube.com/watch?v=hfMk-kjRv4c).
 
 
 ## Pre-requisites
@@ -30,7 +30,8 @@ Doodles)](https://www.youtube.com/watch?v=hfMk-kjRv4c).
  1. [Update your `$PATH` environment
     variable](https://learn.microsoft.com/en-us/dotnet/core/install/linux-scripted-manual#set-environment-variables-system-wide)
     so you can access `dotnet` from the CLI:
-    ```
+    `.bashrc`
+    ```sh
     # For .NET dotnet, C# (csharp)
     # https://learn.microsoft.com/en-us/dotnet/core/install/linux-scripted-manual#set-environment-variables-system-wide
     export DOTNET_ROOT=~/.dotnet
