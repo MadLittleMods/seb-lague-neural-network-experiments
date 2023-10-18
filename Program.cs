@@ -137,6 +137,7 @@ DataPoint[] testingPoints = {
 var hyperParameters = new HyperParameters();
 hyperParameters.layerSizes = new int[] {
 	2,
+	3,
 	//10, 10,
 	numberOfLabels,
 };
@@ -156,8 +157,10 @@ neuralNetwork.SetActivationFunction(activation, outputLayerActivation);
 neuralNetwork.SetCostFunction(Cost.GetCostFromType(hyperParameters.costType));
 
 // Match the random weights and biases from our Zig version
-neuralNetwork.layers[0].weights = new double[] { 0.3251169104168574, 1.0577112895890197, 0.36170159819321346, 0.014072284781826894, -1.271551261654049, 0.32522080597322767 };
+neuralNetwork.layers[0].weights = new double[] { 0.45978474406835834, 1.4958296508119278, 0.5115233056968662, 0.019901215992036102, -1.798245039483776, 0.4599316745732474 };
 neuralNetwork.layers[0].biases = new double[] { 0.1, 0.1, 0.1 };
+neuralNetwork.layers[1].weights = new double[] { 0.26545684575714984, 0.8636176515580903, 0.2953281182408529, 0.011489972410202928, -1.0382172576148672, 0.2655416761236997, 0.48858481453740094, 0.42309380092781346, 1.0127531494214492 };
+neuralNetwork.layers[1].biases = new double[] { 0.1, 0.1, 0.1 };
 
 Console.WriteLine("Starting training!");
 var trainingBatches = DataSetHelper.CreateMiniBatches(trainingData, hyperParameters.minibatchSize, false);
