@@ -1,9 +1,14 @@
 
 A port of https://github.com/SebLague/Neural-Network-Experiments without the reliance on
-Unity. Just the raw neural network code so I can cross-reference values with my own
-implementation which doesn't behave as expected. My own implementation is based from
-the [YouTube video from Sebastian Lague on *How to Create a Neural Network (and Train it
-to Identify Doodles)*](https://www.youtube.com/watch?v=hfMk-kjRv4c).
+Unity. Just the raw neural network code so I can cross-reference output values with my
+own implementation. This would be useful for anyone creating a nerual network based off
+Sebastian's [YouTube video on *How to Create a Neural Network (and Train it to Identify
+Doodles)*](https://www.youtube.com/watch?v=hfMk-kjRv4c).
+
+For example, I wrote a [neural network implementation in
+Zig](https://github.com/MadLittleMods/zig-ocr-neural-network) and not seeing the same
+training results as demonstrated in the video so it's nice to be able to spot potential
+bugs by comparing output values or cost gradient values.
 
 
 ## Pre-requisites
