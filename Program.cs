@@ -1,8 +1,16 @@
-﻿// See https://aka.ms/new-console-template for more information
-// Top-level statements (TLS) allows us to do away with the namespace/class/Main boilerplate
+﻿// Top-level statements (TLS) allows us to do away with the namespace/class/Main
+// boilerplate. See https://aka.ms/new-console-template for more information.
 
 int numberOfLabels = Enum.GetNames(typeof(Label)).Length;
 
+// This is a small testing dataset (to make sure our code is working) with only 2
+// arbitrary features (x and y) where the labeled data points (fish and goat) occupy
+// distinct parts of the graph. The boundary between the two labels is not a
+// straight line (linear relationship) so we need the power of a neural network to
+// learn the non-linear relationship.
+//
+// Graph of animal data points:
+// https://www.desmos.com/calculator/tkfacez5wt
 DataPoint[] trainingData = {
 	new DataPoint(new double[] { 0.924, 0.166 }, (int) Label.Goat, numberOfLabels),
 	new DataPoint(new double[] { 0.04, 0.085 }, (int) Label.Fish, numberOfLabels),
@@ -129,7 +137,8 @@ DataPoint[] testingPoints = {
 var hyperParameters = new HyperParameters();
 hyperParameters.layerSizes = new int[] {
 	2,
-	10, 10,
+	3,
+	//10, 10,
 	numberOfLabels,
 };
 hyperParameters.activationType = Activation.ActivationType.ReLU;
@@ -137,7 +146,7 @@ hyperParameters.outputActivationType = Activation.ActivationType.Softmax;
 hyperParameters.costType = Cost.CostType.MeanSquaredError;
 hyperParameters.initialLearningRate = 0.1;
 hyperParameters.learnRateDecay = 0.0;
-hyperParameters.minibatchSize = 32;
+hyperParameters.minibatchSize = 1;
 hyperParameters.momentum = 0.3;
 hyperParameters.regularization = 0.0;
 
@@ -147,17 +156,23 @@ var outputLayerActivation = Activation.GetActivationFromType(hyperParameters.out
 neuralNetwork.SetActivationFunction(activation, outputLayerActivation);
 neuralNetwork.SetCostFunction(Cost.GetCostFromType(hyperParameters.costType));
 
+// Match the random weights and biases from our Zig version
+neuralNetwork.layers[0].weights = new double[] { 0.45978474406835834, 1.4958296508119278, 0.5115233056968662, 0.019901215992036102, -1.798245039483776, 0.4599316745732474 };
+neuralNetwork.layers[0].biases = new double[] { 0.1, 0.1, 0.1 };
+neuralNetwork.layers[1].weights = new double[] { 0.26545684575714984, 0.8636176515580903, 0.2953281182408529, 0.011489972410202928, -1.0382172576148672, 0.2655416761236997, 0.48858481453740094, 0.42309380092781346, 1.0127531494214492 };
+neuralNetwork.layers[1].biases = new double[] { 0.1, 0.1, 0.1 };
+
 Console.WriteLine("Starting training!");
-var trainingBatches = DataSetHelper.CreateMiniBatches(trainingData, hyperParameters.minibatchSize);
+var trainingBatches = DataSetHelper.CreateMiniBatches(trainingData, hyperParameters.minibatchSize, false);
 var currentEpochIterationCount = 0;
 while (
-	true
-//currentEpochIterationCount < 100
+//true
+currentEpochIterationCount < 1
 )
 {
-	for (int i = 0; i < trainingBatches.Length; i += 1)
+	for (int batchIndex = 0; batchIndex < trainingBatches.Length; batchIndex += 1)
 	{
-		var trainingBatch = trainingBatches[i];
+		var trainingBatch = trainingBatches[batchIndex];
 		neuralNetwork.Learn(
 			trainingBatch.data,
 			hyperParameters.initialLearningRate,
@@ -167,8 +182,11 @@ while (
 
 		//if (currentEpochIterationCount % 1 == 0 && currentEpochIterationCount != 0) {
 		var cost = CostMany(testingPoints);
-		Console.WriteLine($"epoch: {currentEpochIterationCount} -> cost {cost}");
+		Console.WriteLine($"epoch: {currentEpochIterationCount} batch {batchIndex} -> cost {cost}");
 		//}
+
+		// TODO: Remove
+		break;
 	}
 
 	// Shuffle the data after each epoch
@@ -204,4 +222,5 @@ enum Label : int
 {
 	Fish,
 	Goat,
+	RandomThirdLabel,
 }

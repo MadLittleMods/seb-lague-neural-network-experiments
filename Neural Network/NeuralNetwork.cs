@@ -59,6 +59,12 @@ public class NeuralNetwork
 			UpdateGradients(trainingData[i], batchLearnData[i]);
 		});
 
+		for (int layerIndex = 0; layerIndex < layers.Length; layerIndex++)
+		{
+			var testLayer = layers[layerIndex];
+			Console.WriteLine($"layer {layerIndex} costGradientW: {string.Join(", ", testLayer.costGradientW.Select(n => n.ToString("n6")).ToArray())}");
+			Console.WriteLine($"layer {layerIndex} costGradientB: {string.Join(", ", testLayer.costGradientB.Select(n => n.ToString("n6")).ToArray())}");
+		}
 
 		// Update weights and biases based on the calculated gradients
 		for (int i = 0; i < layers.Length; i++)

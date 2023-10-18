@@ -5,8 +5,10 @@ public class Layer
 	public readonly int numNodesIn;
 	public readonly int numNodesOut;
 
-	public readonly double[] weights;
-	public readonly double[] biases;
+	// TODO: Put these back to readonly. We need to be able to set them specifically to
+	// match our other neural network implementation and debug some things.
+	public double[] weights;
+	public double[] biases;
 
 	// Cost gradient with respect to weights and with respect to biases
 	public readonly double[] costGradientW;
